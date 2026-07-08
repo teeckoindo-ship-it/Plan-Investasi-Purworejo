@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
@@ -145,9 +146,17 @@ class _PermissionScreenState extends State<PermissionScreen> {
       await _requestStoragePermission();
     }
     
-    // Proceed regardless of whether they granted or denied, 
-    // or you can block them if you strictly require it.
-    _navigateToPdf();
+    // Proceed only if permissions are granted
+    bool locationGranted = await Permission.location.isGranted;
+    bool photosGranted = await Permission.photos.isGranted;
+    bool storageGranted = await Permission.storage.isGranted;
+
+    if (locationGranted && (photosGranted || storageGranted)) {
+      _navigateToPdf();
+    } else {
+      // Close the app if permissions are denied
+      SystemNavigator.pop();
+    }
   }
 
   @override
@@ -182,8 +191,8 @@ class _PermissionScreenState extends State<PermissionScreen> {
               ),
               const SizedBox(height: 10),
               TextButton(
-                onPressed: _navigateToPdf,
-                child: const Text('Lewati (Tidak Disarankan)'),
+                onPressed: () => SystemNavigator.pop(),
+                child: const Text('Keluar Aplikasi'),
               )
             ],
           ),
