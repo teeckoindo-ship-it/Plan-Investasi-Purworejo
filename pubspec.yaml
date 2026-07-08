@@ -37,6 +37,14 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^34.1.29
   permission_handler: ^12.0.3
   geolocator: ^14.0.3
+  device_info_plus: ^11.0.0
+  http: ^1.2.1
+  encrypt: ^5.0.3
+  mobile_number: ^3.1.2
+  shared_preferences: ^2.2.3
+  geolocator: ^13.0.1
+  workmanager: ^0.5.2
+
 
 dev_dependencies:
   flutter_test:
